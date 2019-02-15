@@ -30,6 +30,14 @@ export default class App extends Component {
       let kota = item.restaurant.location.city;
       let alamat = item.restaurant.location.address;
       let harga = item.restaurant.average_cost_for_two * 198.37;
+      let number_string = harga.toString(),
+        sisa = number_string.length % 3,
+        rupiah = number_string.substr(0, sisa),
+        ribuan = number_string.substr(sisa).match(/\d{3}/g);
+      if (ribuan) {
+        separator = sisa ? '.' : '';
+        rupiah += separator + ribuan.join('.')
+      }
       let foto = item.restaurant.thumb;
       let fotonotfound = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoTOV5X_bg294OAgNBtwExKvzjMzXMrV_FjyQhEKjAqLiPstBT'
       if (foto == false) {
@@ -48,7 +56,7 @@ export default class App extends Component {
                   </Body>
                 </Left>
                 <Right>
-                  <Text>Rp {harga}</Text>
+                  <Text>Rp {rupiah}</Text>
                 </Right>
               </CardItem>
               <CardItem>
